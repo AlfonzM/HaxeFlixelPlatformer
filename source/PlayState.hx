@@ -6,19 +6,29 @@ import flixel.FlxState;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxMath;
-
+import flixel.FlxCamera;
 /**
  * A FlxState which can be used for the actual gameplay.
  */
 class PlayState extends FlxState
 {
-	var player:Player;
+	var _player:Player;
+	var level:Level;
 
 	override public function create():Void
 	{
 		super.create();
-		player = new Player(0,0);
-		add(player);
+
+		// Setup layer
+		_player = new Player(0,0);
+		add(_player);
+
+		// Setup level
+		level = new Level();
+		add(level.level);
+
+		// Setup camera
+		FlxG.camera.follow(_player, FlxCamera.STYLE_LOCKON, 10);
 	}
 	
 	/**
@@ -35,6 +45,15 @@ class PlayState extends FlxState
 	 */
 	override public function update():Void
 	{
+		FlxG.collide(_player, level.level);
+		forDebug();
 		super.update();
 	}	
+
+	private function forDebug(){
+		if(FlxG.keys.justPressed.R){
+			trace("Restart level.");
+			FlxG.switchState(new PlayState());
+		}
+	}
 }
