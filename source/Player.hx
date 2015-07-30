@@ -11,10 +11,10 @@ class Player extends FlxSprite
 	private var maxSpeedY:Int = 400;
 
     // Multiplied to maxSpeedY, used as upward jump force
-    private var jumpForceMultiplier:Float = 0.8;
+    private var jumpForceMultiplier:Float = 2;
 
     // Multiplied to maxSpeedY and set as downwards gravity
-    private var gravityMultiplier:Float = 3;
+    private var gravityMultiplier:Float = 5;
 
     // Multiplied to maxSpeedX and set as drag.x
     private var xDragMultiplier:Float = 2;

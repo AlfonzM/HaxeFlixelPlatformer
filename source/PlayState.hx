@@ -12,23 +12,25 @@ import flixel.FlxCamera;
  */
 class PlayState extends FlxState
 {
+	var _cameraTarget:FlxSprite;
 	var _player:Player;
-	var level:Level;
+	var _level:Level;
 
 	override public function create():Void
 	{
 		super.create();
 
-		// Setup layer
+		// Setup player
 		_player = new Player(0,0);
 		add(_player);
 
-		// Setup level
-		level = new Level();
-		add(level.level);
+		// Setup _level
+		_level = new Level();
+		add(_level.level);
 
 		// Setup camera
-		FlxG.camera.follow(_player, FlxCamera.STYLE_LOCKON, 10);
+		_cameraTarget = new FlxSprite(0,0);
+		FlxG.camera.follow(_cameraTarget, FlxCamera.STYLE_LOCKON, 10);
 	}
 	
 	/**
@@ -45,9 +47,13 @@ class PlayState extends FlxState
 	 */
 	override public function update():Void
 	{
-		FlxG.collide(_player, level.level);
 		forDebug();
+		trace(FlxG.mouse.x);
+		_cameraTarget.setPosition(_player.x + (FlxG.mouse.x - _player.x)/3, _player.y + (FlxG.mouse.y - _player.y)/4);
+		
 		super.update();
+
+		FlxG.collide(_player, _level.level);
 	}	
 
 	private function forDebug(){
