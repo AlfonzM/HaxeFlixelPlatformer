@@ -30,7 +30,7 @@ class PlayState extends FlxState
 
 		// Setup camera
 		_cameraTarget = new FlxSprite(0,0);
-		FlxG.camera.follow(_cameraTarget, FlxCamera.STYLE_LOCKON, 10);
+		FlxG.camera.follow(_cameraTarget, FlxCamera.STYLE_LOCKON, 7);
 	}
 	
 	/**
@@ -48,8 +48,7 @@ class PlayState extends FlxState
 	override public function update():Void
 	{
 		forDebug();
-		trace(FlxG.mouse.x);
-		_cameraTarget.setPosition(_player.x + (FlxG.mouse.x - _player.x)/3, _player.y + (FlxG.mouse.y - _player.y)/4);
+		_cameraTarget.setPosition(_player.x + (FlxG.mouse.x - _player.x)/6, _player.y + (FlxG.mouse.y - _player.y)/6);
 		
 		super.update();
 

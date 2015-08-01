@@ -7,14 +7,14 @@ import flixel.util.FlxColor;
 class Player extends FlxSprite
 {
 	// ------ Change these values ------
-    private var maxSpeedX:Int = 200;
+    private var maxSpeedX:Int = 150;
 	private var maxSpeedY:Int = 400;
 
     // Multiplied to maxSpeedY, used as upward jump force
-    private var jumpForceMultiplier:Float = 2;
+    private var jumpForceMultiplier:Float = 0.7;
 
     // Multiplied to maxSpeedY and set as downwards gravity
-    private var gravityMultiplier:Float = 5;
+    private var gravityMultiplier:Float = 2.5;
 
     // Multiplied to maxSpeedX and set as drag.x
     private var xDragMultiplier:Float = 2;
