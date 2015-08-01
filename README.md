@@ -2,6 +2,8 @@
 
 Base code for making a platformer game in HaxeFlixel.
 
+For additional shoot-em-up functionalities, checkout to `shooter` branch.
+
 ## Features
 - `Player` class with basic platformer physics
     - Movement
