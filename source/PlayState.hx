@@ -28,6 +28,9 @@ class PlayState extends FlxState
 		_level = new Level();
 		add(_level.level);
 
+		FlxG.worldBounds.width = (_level.level.widthInTiles + 1) * Reg.T_WIDTH;
+		FlxG.worldBounds.height = (_level.level.heightInTiles + 1) * Reg.T_WIDTH;
+
 		// Setup camera
 		_cameraTarget = new FlxSprite(0,0);
 		FlxG.camera.follow(_cameraTarget, FlxCamera.STYLE_LOCKON, 7);
