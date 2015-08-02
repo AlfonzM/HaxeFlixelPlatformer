@@ -3,17 +3,21 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
-import flixel.text.FlxText;
-import flixel.ui.FlxButton;
-import flixel.util.FlxMath;
+import flixel.FlxObject;
 import flixel.FlxCamera;
+import flixel.ui.FlxButton;
+import flixel.text.FlxText;
+import flixel.util.FlxMath;
+import flixel.group.FlxTypedGroup;
+
 /**
  * A FlxState which can be used for the actual gameplay.
  */
 class PlayState extends FlxState
 {
-	var _cameraTarget:FlxSprite;
+	public static var _cameraTarget:FlxSprite;
 	var _player:Player;
+	var _bullets:FlxTypedGroup<Bullet>;
 	var _level:Level;
 
 	override public function create():Void
@@ -21,12 +25,22 @@ class PlayState extends FlxState
 		super.create();
 
 		// Setup player
-		_player = new Player(0,0);
+        _bullets = new FlxTypedGroup<Bullet>();
+        _bullets.maxSize = 50;
+
+		_player = new Player(0,0,_bullets);
 		add(_player);
+
+
+        add(_bullets);
 
 		// Setup _level
 		_level = new Level();
 		add(_level.level);
+
+		// Setup World
+		FlxG.worldBounds.width = (_level.level.widthInTiles + 1) * Reg.T_WIDTH;
+		FlxG.worldBounds.height = (_level.level.heightInTiles + 1) * Reg.T_HEIGHT;
 
 		// Setup camera
 		_cameraTarget = new FlxSprite(0,0);
@@ -52,6 +66,7 @@ class PlayState extends FlxState
 		
 		super.update();
 
+		FlxG.collide(_bullets, _level.level, onCollision);
 		FlxG.collide(_player, _level.level);
 	}	
 
@@ -59,6 +74,16 @@ class PlayState extends FlxState
 		if(FlxG.keys.justPressed.R){
 			trace("Restart level.");
 			FlxG.switchState(new PlayState());
+		}
+	}
+
+	/*
+	 *	Callback function called by overlap() in update
+	 */
+	private function onCollision(Object1:FlxObject, Object2:FlxObject):Void{
+		// Bullet collide with level
+		if(Std.is(Object1, Bullet)){
+			Object1.kill();
 		}
 	}
 }
